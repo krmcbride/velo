@@ -15,7 +15,6 @@ import { useComposerStore } from "@/stores/composerStore";
 import { getMessagesForThread } from "@/services/db/messages";
 import { Archive, Trash2, X, Ban, Search, UserPlus, CheckCircle2, Star, Clock, Send, FileEdit, ShieldCheck, Mail, Tag, Filter } from "lucide-react";
 import { EmptyState } from "../ui/EmptyState";
-import { DEMO_MODE, DEMO_THREADS } from "@/demoData";
 
 const PAGE_SIZE = 50;
 
@@ -202,19 +201,6 @@ export function EmailList({ width, listRef }: { width?: number; listRef?: React.
   const loadThreads = useCallback(async () => {
     if (!activeAccountId) {
       setThreads([]);
-      return;
-    }
-
-    // Demo mode: use fake threads
-    if (DEMO_MODE) {
-      clearSearch();
-      const gmailLabelId = LABEL_MAP[activeLabel] ?? activeLabel;
-      const filtered = gmailLabelId
-        ? DEMO_THREADS.filter((t) => t.labelIds.includes(gmailLabelId))
-        : DEMO_THREADS;
-      setThreads(filtered);
-      setLoading(false);
-      setHasMore(false);
       return;
     }
 
