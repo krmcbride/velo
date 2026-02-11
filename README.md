@@ -24,6 +24,12 @@
 
 ---
 
+<p align="center">
+  <img width="1920" height="1032" alt="Screenshot 2026-02-11 182628" src="https://github.com/user-attachments/assets/27b1dc55-84c5-41b0-aaf1-92c890f853e3" />
+</p>
+
+---
+
 ## Why Velo?
 
 Most email clients are slow, bloated, or send your data to someone else's server. Velo is different:
