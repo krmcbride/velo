@@ -90,7 +90,7 @@ export function AccountSwitcher({
           }`}
         >
           {accounts.length > 1 && (
-            <div className="px-3 py-1.5 text-[10px] font-medium text-text-tertiary uppercase tracking-wider">
+            <div className="px-3 py-1.5 text-[0.625rem] font-medium text-text-tertiary uppercase tracking-wider">
               Accounts
             </div>
           )}

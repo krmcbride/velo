@@ -71,7 +71,7 @@ export function MonthView({ currentDate, events, onEventClick }: MonthViewProps)
                   />
                 ))}
                 {dayEvents.length > 3 && (
-                  <div className="text-[10px] text-text-tertiary pl-1">
+                  <div className="text-[0.625rem] text-text-tertiary pl-1">
                     +{dayEvents.length - 3} more
                   </div>
                 )}

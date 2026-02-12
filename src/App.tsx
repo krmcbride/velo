@@ -101,7 +101,7 @@ function ResizableEmailLayout() {
 }
 
 export default function App() {
-  const { theme, setTheme, sidebarCollapsed, setSidebarCollapsed, setContactSidebarVisible, readingPanePosition, setReadingPanePosition, setReadFilter, setEmailListWidth, setEmailDensity, setDefaultReplyMode, setMarkAsReadBehavior, setSendAndArchive, activeLabel } = useUIStore();
+  const { theme, setTheme, sidebarCollapsed, setSidebarCollapsed, setContactSidebarVisible, readingPanePosition, setReadingPanePosition, setReadFilter, setEmailListWidth, setEmailDensity, setDefaultReplyMode, setMarkAsReadBehavior, setSendAndArchive, fontScale, setFontScale, activeLabel } = useUIStore();
   const { setAccounts } = useAccountStore();
   const [showAddAccount, setShowAddAccount] = useState(false);
   const [initialized, setInitialized] = useState(false);
@@ -220,6 +220,12 @@ export default function App() {
           setSendAndArchive(true);
         }
 
+        // Restore font scale
+        const savedFontScale = await getSetting("font_size");
+        if (savedFontScale === "small" || savedFontScale === "default" || savedFontScale === "large" || savedFontScale === "xlarge") {
+          setFontScale(savedFontScale);
+        }
+
         // Load custom keyboard shortcuts
         await useShortcutStore.getState().loadKeyMap();
 
@@ -278,7 +284,7 @@ export default function App() {
       unregisterComposeShortcut();
       deepLinkCleanupRef?.();
     };
-  }, [setAccounts, setTheme, setSidebarCollapsed, setContactSidebarVisible, setReadingPanePosition, setReadFilter, setEmailListWidth, setEmailDensity, setDefaultReplyMode, setMarkAsReadBehavior, setSendAndArchive]);
+  }, [setAccounts, setTheme, setSidebarCollapsed, setContactSidebarVisible, setReadingPanePosition, setReadFilter, setEmailListWidth, setEmailDensity, setDefaultReplyMode, setMarkAsReadBehavior, setSendAndArchive, setFontScale]);
 
   // Listen for sync status updates
   useEffect(() => {
@@ -325,6 +331,13 @@ export default function App() {
       return () => mq.removeEventListener("change", apply);
     }
   }, [theme]);
+
+  // Sync font-scale class to <html> element
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove("font-scale-small", "font-scale-default", "font-scale-large", "font-scale-xlarge");
+    root.classList.add(`font-scale-${fontScale}`);
+  }, [fontScale]);
 
   const handleAddAccountSuccess = useCallback(async () => {
     setShowAddAccount(false);

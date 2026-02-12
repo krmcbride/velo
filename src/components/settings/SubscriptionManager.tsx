@@ -165,12 +165,12 @@ export function SubscriptionManager() {
                     {sub.from_name ?? sub.from_address}
                   </span>
                   {isUnsubscribed && (
-                    <span className="text-[10px] px-1.5 rounded-full bg-success/15 text-success">
+                    <span className="text-[0.625rem] px-1.5 rounded-full bg-success/15 text-success">
                       Unsubscribed
                     </span>
                   )}
                   {parsed.hasOneClick && !isUnsubscribed && (
-                    <span className="text-[10px] px-1.5 rounded-full bg-accent/15 text-accent">
+                    <span className="text-[0.625rem] px-1.5 rounded-full bg-accent/15 text-accent">
                       One-click
                     </span>
                   )}

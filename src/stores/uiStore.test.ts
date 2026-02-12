@@ -16,6 +16,7 @@ describe("uiStore", () => {
       readingPanePosition: "right",
       activeLabel: "inbox",
       readFilter: "all",
+      fontScale: "default",
     });
   });
 
@@ -120,6 +121,22 @@ describe("uiStore", () => {
     useUIStore.getState().setMarkAsReadBehavior("manual");
     expect(setSetting).toHaveBeenCalledWith("mark_as_read_behavior", "manual");
     expect(useUIStore.getState().markAsReadBehavior).toBe("manual");
+  });
+
+  it("setFontScale should persist to DB and update state", () => {
+    expect(useUIStore.getState().fontScale).toBe("default");
+
+    useUIStore.getState().setFontScale("large");
+    expect(setSetting).toHaveBeenCalledWith("font_size", "large");
+    expect(useUIStore.getState().fontScale).toBe("large");
+
+    useUIStore.getState().setFontScale("small");
+    expect(setSetting).toHaveBeenCalledWith("font_size", "small");
+    expect(useUIStore.getState().fontScale).toBe("small");
+
+    useUIStore.getState().setFontScale("xlarge");
+    expect(setSetting).toHaveBeenCalledWith("font_size", "xlarge");
+    expect(useUIStore.getState().fontScale).toBe("xlarge");
   });
 
   it("setSendAndArchive should persist to DB and update state", () => {

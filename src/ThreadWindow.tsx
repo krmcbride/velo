@@ -12,7 +12,7 @@ import { getThreadById, getThreadLabelIds } from "./services/db/threads";
 import type { Thread } from "./stores/threadStore";
 
 export default function ThreadWindow() {
-  const { setTheme } = useUIStore();
+  const { setTheme, setFontScale } = useUIStore();
   const { setAccounts } = useAccountStore();
   const [thread, setThread] = useState<Thread | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,6 +37,12 @@ export default function ThreadWindow() {
         const savedTheme = await getSetting("theme");
         if (savedTheme === "light" || savedTheme === "dark" || savedTheme === "system") {
           setTheme(savedTheme);
+        }
+
+        // Restore font scale
+        const savedFontScale = await getSetting("font_size");
+        if (savedFontScale === "small" || savedFontScale === "default" || savedFontScale === "large" || savedFontScale === "xlarge") {
+          setFontScale(savedFontScale);
         }
 
         // Load accounts into store
@@ -85,7 +91,7 @@ export default function ThreadWindow() {
     }
 
     init();
-  }, [setTheme, setAccounts]);
+  }, [setTheme, setFontScale, setAccounts]);
 
   // Sync theme class to <html>
   const theme = useUIStore((s) => s.theme);
@@ -106,6 +112,14 @@ export default function ThreadWindow() {
       return () => mq.removeEventListener("change", apply);
     }
   }, [theme]);
+
+  // Sync font-scale class to <html>
+  const fontScale = useUIStore((s) => s.fontScale);
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.remove("font-scale-small", "font-scale-default", "font-scale-large", "font-scale-xlarge");
+    root.classList.add(`font-scale-${fontScale}`);
+  }, [fontScale]);
 
   if (loading) {
     return (

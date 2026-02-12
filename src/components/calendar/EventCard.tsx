@@ -16,7 +16,7 @@ export function EventCard({ event, compact, onClick }: EventCardProps) {
     return (
       <button
         onClick={onClick}
-        className="w-full text-left text-[10px] px-1 py-0.5 rounded bg-accent/10 text-accent truncate hover:bg-accent/20 transition-colors"
+        className="w-full text-left text-[0.625rem] px-1 py-0.5 rounded bg-accent/10 text-accent truncate hover:bg-accent/20 transition-colors"
         title={event.summary ?? "Event"}
       >
         {event.summary ?? "Event"}

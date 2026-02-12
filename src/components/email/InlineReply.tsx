@@ -263,7 +263,7 @@ export function InlineReply({ thread, messages, accountId, noReply, onSent }: In
               <button
                 key={m}
                 onClick={() => setMode(m)}
-                className={`px-2 py-1 text-[11px] rounded transition-colors ${
+                className={`px-2 py-1 text-[0.6875rem] rounded transition-colors ${
                   mode === m
                     ? "bg-accent/10 text-accent font-medium"
                     : "text-text-tertiary hover:text-text-primary"
@@ -274,7 +274,7 @@ export function InlineReply({ thread, messages, accountId, noReply, onSent }: In
             ))}
           </div>
           {to.length > 0 && (
-            <span className="text-[11px] text-text-tertiary truncate max-w-[200px]">
+            <span className="text-[0.6875rem] text-text-tertiary truncate max-w-[200px]">
               to {to.join(", ")}
             </span>
           )}

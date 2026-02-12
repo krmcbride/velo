@@ -160,7 +160,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
           ) : (
             categories.map((cat) => (
               <div key={cat}>
-                <div className="px-4 py-1 text-[10px] font-semibold uppercase tracking-wider text-text-tertiary">
+                <div className="px-4 py-1 text-[0.625rem] font-semibold uppercase tracking-wider text-text-tertiary">
                   {cat}
                 </div>
                 {filtered
@@ -177,7 +177,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                       >
                         <span className="text-text-primary">{cmd.label}</span>
                         {cmd.shortcut && (
-                          <kbd className="text-[10px] text-text-tertiary bg-bg-tertiary px-1.5 py-0.5 rounded">
+                          <kbd className="text-[0.625rem] text-text-tertiary bg-bg-tertiary px-1.5 py-0.5 rounded">
                             {cmd.shortcut}
                           </kbd>
                         )}

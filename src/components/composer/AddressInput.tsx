@@ -92,7 +92,7 @@ export function AddressInput({
             {addr}
             <button
               onClick={() => removeAddress(i)}
-              className="hover:text-danger text-[10px] leading-none"
+              className="hover:text-danger text-[0.625rem] leading-none"
             >
               ×
             </button>

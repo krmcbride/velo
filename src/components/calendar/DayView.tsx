@@ -61,7 +61,7 @@ export function DayView({ currentDate, events, onEventClick }: DayViewProps) {
           return (
             <div key={hour} className="flex border-b border-border-secondary h-14">
               <div className="w-16 shrink-0 px-2 flex items-start justify-end -mt-1.5">
-                <span className="text-[10px] text-text-tertiary">
+                <span className="text-[0.625rem] text-text-tertiary">
                   {hour === 0 ? "" : `${hour % 12 || 12}${hour < 12 ? "am" : "pm"}`}
                 </span>
               </div>

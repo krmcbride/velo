@@ -51,7 +51,7 @@ const tabs: { id: SettingsTab; label: string; icon: LucideIcon }[] = [
 ];
 
 export function SettingsPage() {
-  const { theme, setTheme, readingPanePosition, setReadingPanePosition, emailDensity, setEmailDensity, defaultReplyMode, setDefaultReplyMode, markAsReadBehavior, setMarkAsReadBehavior, sendAndArchive, setSendAndArchive } = useUIStore();
+  const { theme, setTheme, readingPanePosition, setReadingPanePosition, emailDensity, setEmailDensity, fontScale, setFontScale, defaultReplyMode, setDefaultReplyMode, markAsReadBehavior, setMarkAsReadBehavior, sendAndArchive, setSendAndArchive } = useUIStore();
   const setActiveLabel = useUIStore((s) => s.setActiveLabel);
   const { accounts, removeAccount: removeAccountFromStore } = useAccountStore();
   const [activeTab, setActiveTab] = useState<SettingsTab>("general");
@@ -278,7 +278,7 @@ export function SettingsPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2.5 w-full px-4 py-2 text-[13px] transition-colors ${
+                className={`flex items-center gap-2.5 w-full px-4 py-2 text-[0.8125rem] transition-colors ${
                   isActive
                     ? "bg-bg-selected text-accent font-medium"
                     : "text-text-secondary hover:bg-bg-hover hover:text-text-primary"
@@ -346,6 +346,20 @@ export function SettingsPage() {
                         <option value="compact">Compact</option>
                         <option value="default">Default</option>
                         <option value="spacious">Spacious</option>
+                      </select>
+                    </SettingRow>
+                    <SettingRow label="Font size">
+                      <select
+                        value={fontScale}
+                        onChange={(e) => {
+                          setFontScale(e.target.value as "small" | "default" | "large" | "xlarge");
+                        }}
+                        className="w-48 bg-bg-tertiary text-text-primary text-sm px-3 py-1.5 rounded-md border border-border-primary focus:border-accent outline-none"
+                      >
+                        <option value="small">Small</option>
+                        <option value="default">Default</option>
+                        <option value="large">Large</option>
+                        <option value="xlarge">Extra Large</option>
                       </select>
                     </SettingRow>
                   </Section>
@@ -1297,7 +1311,7 @@ function BundleSettings() {
                           : [...rule.days, idx].sort();
                         saveRule(cat, { days });
                       }}
-                      className={`w-8 h-7 text-[10px] rounded transition-colors ${
+                      className={`w-8 h-7 text-[0.625rem] rounded transition-colors ${
                         rule.days.includes(idx)
                           ? "bg-accent text-white"
                           : "bg-bg-tertiary text-text-tertiary border border-border-primary"

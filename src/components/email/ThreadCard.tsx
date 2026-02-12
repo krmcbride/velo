@@ -132,7 +132,7 @@ export function ThreadCard({ thread, isSelected, onClick, onContextMenu, categor
               {thread.snippet}
             </span>
             {showCategoryBadge && category && category !== "Primary" && CATEGORY_COLORS[category] && (
-              <span className={`shrink-0 text-[10px] px-1.5 rounded-full leading-normal ${CATEGORY_COLORS[category]}`}>
+              <span className={`shrink-0 text-[0.625rem] px-1.5 rounded-full leading-normal ${CATEGORY_COLORS[category]}`}>
                 {category}
               </span>
             )}

@@ -152,7 +152,7 @@ export function LabelForm({ accountId, label, onDone, variant = "settings" }: La
           onClick={handleSave}
           disabled={!name.trim() || isSaving}
           className={`${
-            isSidebar ? "px-2 py-1 text-[10px]" : "px-3 py-1.5 text-xs"
+            isSidebar ? "px-2 py-1 text-[0.625rem]" : "px-3 py-1.5 text-xs"
           } font-medium text-white bg-accent hover:bg-accent-hover rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {isSaving ? "Saving..." : label ? "Update" : "Save"}
@@ -160,7 +160,7 @@ export function LabelForm({ accountId, label, onDone, variant = "settings" }: La
         <button
           onClick={onDone}
           className={`${
-            isSidebar ? "px-2 py-1 text-[10px]" : "px-3 py-1.5 text-xs"
+            isSidebar ? "px-2 py-1 text-[0.625rem]" : "px-3 py-1.5 text-xs"
           } text-text-secondary hover:text-text-primary rounded-md transition-colors`}
         >
           Cancel

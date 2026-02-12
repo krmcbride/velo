@@ -113,7 +113,7 @@ export function TemplateEditor() {
             <div className="text-sm font-medium text-text-primary flex items-center gap-2">
               {tmpl.name}
               {tmpl.shortcut && (
-                <kbd className="text-[10px] bg-bg-tertiary text-text-tertiary px-1.5 py-0.5 rounded">
+                <kbd className="text-[0.625rem] bg-bg-tertiary text-text-tertiary px-1.5 py-0.5 rounded">
                   {tmpl.shortcut}
                 </kbd>
               )}

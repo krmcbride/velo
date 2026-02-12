@@ -103,7 +103,7 @@ export function SignatureEditor() {
             <div className="text-sm font-medium text-text-primary flex items-center gap-2">
               {sig.name}
               {sig.is_default === 1 && (
-                <span className="text-[10px] bg-accent/10 text-accent px-1.5 py-0.5 rounded">
+                <span className="text-[0.625rem] bg-accent/10 text-accent px-1.5 py-0.5 rounded">
                   Default
                 </span>
               )}

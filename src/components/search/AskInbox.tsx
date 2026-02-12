@@ -133,7 +133,7 @@ export function AskInbox({ isOpen, onClose }: AskInboxProps) {
                           <span className="text-xs font-medium text-text-primary truncate">
                             {msg.from_name ?? msg.from_address ?? "Unknown"}
                           </span>
-                          <span className="text-[10px] text-text-tertiary shrink-0 ml-2">
+                          <span className="text-[0.625rem] text-text-tertiary shrink-0 ml-2">
                             {new Date(msg.date).toLocaleDateString()}
                           </span>
                         </div>

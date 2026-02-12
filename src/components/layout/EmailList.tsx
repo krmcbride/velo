@@ -660,7 +660,7 @@ function CategoryTabs({ activeCategory, onSelect, unreadCounts }: { activeCatego
           >
             {cat}
             {cat !== "All" && (unreadCounts.get(cat) ?? 0) > 0 && (
-              <span className="text-[10px] bg-accent/15 text-accent px-1.5 rounded-full leading-normal">
+              <span className="text-[0.625rem] bg-accent/15 text-accent px-1.5 rounded-full leading-normal">
                 {unreadCounts.get(cat)}
               </span>
             )}

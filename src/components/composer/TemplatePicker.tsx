@@ -69,7 +69,7 @@ export function TemplatePicker({ editor }: TemplatePickerProps) {
             >
               <div className="text-text-primary text-xs font-medium">{tmpl.name}</div>
               {tmpl.subject && (
-                <div className="text-text-tertiary text-[10px] truncate">{tmpl.subject}</div>
+                <div className="text-text-tertiary text-[0.625rem] truncate">{tmpl.subject}</div>
               )}
             </button>
           ))}

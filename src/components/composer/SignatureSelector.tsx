@@ -42,7 +42,7 @@ export function SignatureSelector() {
     <select
       value={signatureId ?? ""}
       onChange={(e) => handleChange(e.target.value)}
-      className="text-[10px] bg-bg-tertiary text-text-secondary border border-border-primary rounded px-1.5 py-0.5"
+      className="text-[0.625rem] bg-bg-tertiary text-text-secondary border border-border-primary rounded px-1.5 py-0.5"
     >
       <option value="">No signature</option>
       {signatures.map((sig) => (

@@ -7,6 +7,7 @@ type ReadFilter = "all" | "read" | "unread";
 export type EmailDensity = "compact" | "default" | "spacious";
 export type DefaultReplyMode = "reply" | "replyAll";
 export type MarkAsReadBehavior = "instant" | "2s" | "manual";
+export type FontScale = "small" | "default" | "large" | "xlarge";
 
 interface UIState {
   theme: Theme;
@@ -19,6 +20,7 @@ interface UIState {
   emailDensity: EmailDensity;
   defaultReplyMode: DefaultReplyMode;
   markAsReadBehavior: MarkAsReadBehavior;
+  fontScale: FontScale;
   sendAndArchive: boolean;
   setTheme: (theme: Theme) => void;
   toggleSidebar: () => void;
@@ -32,6 +34,7 @@ interface UIState {
   setEmailDensity: (density: EmailDensity) => void;
   setDefaultReplyMode: (mode: DefaultReplyMode) => void;
   setMarkAsReadBehavior: (behavior: MarkAsReadBehavior) => void;
+  setFontScale: (scale: FontScale) => void;
   setSendAndArchive: (enabled: boolean) => void;
 }
 
@@ -46,6 +49,7 @@ export const useUIStore = create<UIState>((set) => ({
   emailDensity: "default",
   defaultReplyMode: "reply",
   markAsReadBehavior: "instant",
+  fontScale: "default",
   sendAndArchive: false,
 
   setTheme: (theme) => set({ theme }),
@@ -87,6 +91,10 @@ export const useUIStore = create<UIState>((set) => ({
   setMarkAsReadBehavior: (markAsReadBehavior) => {
     setSetting("mark_as_read_behavior", markAsReadBehavior).catch(() => {});
     set({ markAsReadBehavior });
+  },
+  setFontScale: (fontScale) => {
+    setSetting("font_size", fontScale).catch(() => {});
+    set({ fontScale });
   },
   setSendAndArchive: (sendAndArchive) => {
     setSetting("send_and_archive", String(sendAndArchive)).catch(() => {});

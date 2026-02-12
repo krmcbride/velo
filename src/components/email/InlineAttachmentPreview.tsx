@@ -59,7 +59,7 @@ export function InlineAttachmentPreview({
                   {att.filename ?? "Document.pdf"}
                 </div>
                 {att.size != null && (
-                  <div className="text-[10px] text-text-tertiary">
+                  <div className="text-[0.625rem] text-text-tertiary">
                     {formatFileSize(att.size)}
                   </div>
                 )}

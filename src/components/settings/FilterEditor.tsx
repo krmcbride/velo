@@ -164,7 +164,7 @@ export function FilterEditor() {
             <div className="text-sm font-medium text-text-primary flex items-center gap-2">
               {filter.name}
               {filter.is_enabled !== 1 && (
-                <span className="text-[10px] bg-bg-tertiary text-text-tertiary px-1.5 py-0.5 rounded">
+                <span className="text-[0.625rem] bg-bg-tertiary text-text-tertiary px-1.5 py-0.5 rounded">
                   Disabled
                 </span>
               )}

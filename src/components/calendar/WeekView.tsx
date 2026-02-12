@@ -61,7 +61,7 @@ export function WeekView({ currentDate, events, onEventClick }: WeekViewProps) {
 
       {/* All-day events row */}
       <div className="grid grid-cols-[60px_repeat(7,1fr)] border-b border-border-primary shrink-0">
-        <div className="border-r border-border-secondary px-1 py-1 text-[10px] text-text-tertiary">all-day</div>
+        <div className="border-r border-border-secondary px-1 py-1 text-[0.625rem] text-text-tertiary">all-day</div>
         {days.map((day, i) => {
           const allDay = getAllDayEvents(day);
           return (
@@ -70,7 +70,7 @@ export function WeekView({ currentDate, events, onEventClick }: WeekViewProps) {
                 <button
                   key={e.id}
                   onClick={() => onEventClick(e)}
-                  className="w-full text-left text-[10px] px-1 py-0.5 rounded bg-accent/10 text-accent truncate hover:bg-accent/20 transition-colors"
+                  className="w-full text-left text-[0.625rem] px-1 py-0.5 rounded bg-accent/10 text-accent truncate hover:bg-accent/20 transition-colors"
                 >
                   {e.summary ?? "Event"}
                 </button>
@@ -86,7 +86,7 @@ export function WeekView({ currentDate, events, onEventClick }: WeekViewProps) {
           {HOURS.map((hour) => (
             <div key={hour} className="contents">
               <div className="border-r border-b border-border-secondary h-12 px-1 flex items-start justify-end">
-                <span className="text-[10px] text-text-tertiary -mt-1.5">
+                <span className="text-[0.625rem] text-text-tertiary -mt-1.5">
                   {hour === 0 ? "" : `${hour % 12 || 12}${hour < 12 ? "am" : "pm"}`}
                 </span>
               </div>
@@ -98,7 +98,7 @@ export function WeekView({ currentDate, events, onEventClick }: WeekViewProps) {
                       <button
                         key={e.id}
                         onClick={() => onEventClick(e)}
-                        className="absolute inset-x-0.5 text-[10px] px-1 py-0.5 rounded bg-accent/15 text-accent truncate hover:bg-accent/25 transition-colors"
+                        className="absolute inset-x-0.5 text-[0.625rem] px-1 py-0.5 rounded bg-accent/15 text-accent truncate hover:bg-accent/25 transition-colors"
                         title={e.summary ?? "Event"}
                       >
                         {e.summary ?? "Event"}

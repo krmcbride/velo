@@ -144,7 +144,7 @@ export function ContactSidebar({ email, name, accountId, onClose }: ContactSideb
                     {thread.subject ?? "(No subject)"}
                   </div>
                   {thread.last_message_at && (
-                    <div className="text-text-tertiary text-[10px] mt-0.5">
+                    <div className="text-text-tertiary text-[0.625rem] mt-0.5">
                       {formatRelativeDate(thread.last_message_at)}
                     </div>
                   )}
