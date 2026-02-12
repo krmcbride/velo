@@ -15,11 +15,10 @@
 
 <p align="center">
   <a href="#features">Features</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
-  <a href="#installation">Installation</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
-  <a href="#keyboard-shortcuts">Shortcuts</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
-  <a href="#ai-features">AI</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
-  <a href="#architecture">Architecture</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
-  <a href="#development">Development</a>
+  <a href="#getting-started">Getting Started</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+  <a href="docs/keyboard-shortcuts.md">Shortcuts</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+  <a href="docs/architecture.md">Architecture</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+  <a href="docs/development.md">Development</a>
 </p>
 
 ---
@@ -44,287 +43,118 @@ Most email clients are slow, bloated, or send your data to someone else's server
 
 ## Features
 
-### Core Email
+### Email
 
-- **Multi-account Gmail** -- Add multiple accounts and switch between them instantly
-- **Threaded conversations** -- Gmail-style threads with collapsible messages
-- **Unified inbox** -- View all accounts at once or filter by account
-- **Full-text search** -- FTS5 trigram search with Gmail-style operators (`from:`, `to:`, `subject:`, `has:attachment`, `is:unread`, `before:`, `after:`, `label:`)
-- **Command palette** -- Quick search and actions with `/` or `Ctrl+K`
-- **Drag-and-drop labels** -- Drag threads onto sidebar labels to organize
-- **Multi-select** -- Click and Shift+click for batch operations
-- **Pin threads** -- Keep important conversations at the top
+- Multi-account Gmail with instant switching
+- Threaded conversations with collapsible messages
+- Full-text search with Gmail-style operators (`from:`, `to:`, `subject:`, `has:attachment`, `label:`, etc.)
+- Command palette (`/` or `Ctrl+K`) for quick actions
+- Drag-and-drop labels, multi-select, pin threads, context menus
+- Inline reply, contact sidebar with Gravatar
 
-### Rich Composer
+### Composer
 
-- **TipTap v3 editor** -- Bold, italic, underline, headings, lists, blockquotes, code blocks, links, images
-- **Undo send** -- Configurable delay (default 5s) to cancel outgoing mail
-- **Schedule send** -- Pick a time or choose presets (later today, tomorrow, next week)
-- **Auto-save drafts** -- Saves to Gmail drafts every 3 seconds
-- **Signatures** -- Multiple signatures per account with default selection
-- **Templates** -- Reusable templates with variables (`{{recipientEmail}}`, `{{senderName}}`, etc.) and keyboard shortcuts for instant insertion
-- **Drag-and-drop attachments** -- Drop files directly into the composer
-- **Contact autocomplete** -- Frequency-ranked suggestions as you type
+- TipTap v3 rich text editor (bold, italic, lists, code, links, images)
+- Undo send, schedule send, auto-save drafts
+- Multiple signatures, reusable templates with variables
+- Drag-and-drop attachments with inline preview
+- Frequency-ranked contact autocomplete
 
 ### Smart Inbox
 
-- **Snooze** -- Hide emails until later with presets or a custom date/time
-- **Filters** -- Auto-apply rules to incoming mail (label, archive, trash, star, mark read)
-- **Auto-categorization** -- AI sorts threads into Primary, Updates, Promotions, Social, Newsletters
-- **One-click unsubscribe** -- Detects `List-Unsubscribe` headers for instant cleanup
-- **Spam management** -- Report spam or mark as not spam with a single key
+- Snooze threads with presets or custom date/time
+- Filters to auto-label, archive, trash, star, or mark read
+- AI + rule-based auto-categorization (Primary, Updates, Promotions, Social, Newsletters)
+- One-click unsubscribe (RFC 8058) and subscription manager
+- Newsletter bundling with delivery schedules
+- Follow-up reminders when you haven't received a reply
 
-### AI Features
+### AI
 
-Velo supports **three AI providers** -- choose the one you prefer:
+Three providers -- choose one or mix and match:
 
-| Provider | Models |
-|----------|--------|
-| **Anthropic** | Claude |
-| **OpenAI** | GPT |
-| **Google** | Gemini |
+| | Anthropic | OpenAI | Google |
+|--|-----------|--------|--------|
+| | Claude | GPT | Gemini |
 
-- **Thread summaries** -- Auto-generate summaries for long conversations
-- **Smart reply** -- Get 3 contextual reply suggestions per thread
-- **AI compose** -- Describe what you want to say, get a full draft
-- **AI reply** -- Generate replies with optional custom instructions
-- **Text transform** -- Improve, shorten, or formalize selected text
-- **Ask My Inbox** -- Natural language questions across your entire mailbox
-- **Local caching** -- AI results cached locally to reduce API costs
+Thread summaries, smart reply suggestions, AI compose & reply, text transform (improve/shorten/formalize), Ask My Inbox (natural language search). All results cached locally.
 
 ### Calendar
 
-- **Google Calendar sync** -- View events in month, week, or day view
-- **Create events** -- Add new events without leaving Velo
-- **Event details** -- View attendees, location, and description
+Google Calendar sync with month, week, and day views. Create events without leaving Velo.
 
 ### UI & Design
 
-- **Glassmorphism** -- Modern glass panels with animated gradient background
-- **Dark mode** -- System-aware or manual toggle (light / dark / system)
-- **Flexible layout** -- Reading pane: right, bottom, or hidden
-- **Resizable panels** -- Drag to resize the email list
-- **Pop-out threads** -- Open any thread in its own window
-- **Custom titlebar** -- Clean, native-feeling design
-- **System tray** -- Minimize to tray, check mail from tray menu
+- Glassmorphism with animated gradient background
+- Dark / light / system theme
+- Flexible reading pane (right, bottom, hidden), resizable panels
+- Configurable density and font scaling
+- Pop-out thread windows, custom titlebar, splash screen
+- System tray with taskbar badge count
 
-### Security & Privacy
+### Privacy & Security
 
-- **OAuth PKCE** -- Secure authentication without a client secret
-- **Remote image blocking** -- Tracking pixels blocked by default, per-sender allowlist
-- **HTML sanitization** -- DOMPurify + sandboxed iframe rendering
-- **Encrypted token storage** -- AES-256-GCM encryption for sensitive data
-- **No backend servers** -- Direct Gmail API communication, nothing passes through third parties
+- OAuth PKCE -- no client secret, no backend servers
+- Remote image blocking with per-sender allowlist
+- DOMPurify + sandboxed iframe rendering
+- AES-256-GCM encrypted token storage
 
----
+### System Integration
 
-## Keyboard Shortcuts
-
-Velo is designed to be used entirely from the keyboard.
-
-### Navigation
-
-| Key | Action |
-|-----|--------|
-| `j` / `k` | Next / previous thread |
-| `o` or `Enter` | Open thread |
-| `Escape` | Close composer / clear selection / deselect |
-| `g` then `i` | Go to Inbox |
-| `g` then `s` | Go to Starred |
-| `g` then `t` | Go to Sent |
-| `g` then `d` | Go to Drafts |
-
-### Actions
-
-| Key | Action |
-|-----|--------|
-| `c` | Compose new email |
-| `r` | Reply |
-| `a` | Reply all |
-| `f` | Forward |
-| `e` | Archive |
-| `s` | Star / unstar |
-| `p` | Pin / unpin |
-| `#` | Trash (permanent delete if already in trash) |
-| `!` | Spam / not spam |
-| `u` | Unsubscribe |
-| `Ctrl+Enter` | Send email |
-
-### App
-
-| Key | Action |
-|-----|--------|
-| `/` or `Ctrl+K` | Command palette |
-| `?` | Keyboard shortcuts help |
-| `Ctrl+Shift+E` | Toggle sidebar |
-| `Ctrl+A` | Select all threads |
+- `mailto:` deep links, global compose shortcut
+- Autostart (hidden in tray), single instance
+- [Customizable keyboard shortcuts](docs/keyboard-shortcuts.md)
 
 ---
 
-## Installation
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v18+)
-- [Rust](https://www.rust-lang.org/tools/install) (latest stable)
-- Tauri v2 system dependencies ([see Tauri docs](https://v2.tauri.app/start/prerequisites/))
-
-### Setup
+## Getting Started
 
 ```bash
-# Clone the repository
 git clone https://github.com/avihaymenahem/velo.git
 cd velo
-
-# Install dependencies
 npm install
-
-# Run in development mode
 npm run tauri dev
 ```
 
-### Gmail OAuth Setup
+**Prerequisites:** [Node.js](https://nodejs.org/) v18+, [Rust](https://www.rust-lang.org/tools/install), [Tauri v2 deps](https://v2.tauri.app/start/prerequisites/)
 
-Velo connects directly to Gmail via OAuth. You need your own Google Cloud credentials:
+**Gmail setup:** Create OAuth credentials in [Google Cloud Console](https://console.cloud.google.com/) (enable Gmail API + Calendar API), then enter your Client ID in Velo's Settings. No client secret needed (PKCE).
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project (or use an existing one)
-3. Enable the **Gmail API** and **Google Calendar API**
-4. Create OAuth 2.0 credentials (Desktop application)
-5. In Velo's Settings, enter your Client ID
+**AI setup (optional):** Add an API key for [Anthropic](https://console.anthropic.com/), [OpenAI](https://platform.openai.com/), or [Google Gemini](https://aistudio.google.com/) in Settings.
 
-> **Note:** Velo uses PKCE flow -- no client secret is required for the app itself.
-
-### AI Setup (Optional)
-
-To enable AI features, add your API key for one or more providers in Settings:
-
-- **Anthropic** -- [Get API key](https://console.anthropic.com/)
-- **OpenAI** -- [Get API key](https://platform.openai.com/)
-- **Google Gemini** -- [Get API key](https://aistudio.google.com/)
+See [Development Guide](docs/development.md) for all commands, testing, and build instructions.
 
 ---
 
-## Architecture
+## Tech Stack
 
-Velo follows a **three-layer architecture** with clear separation of concerns:
-
-```
-+--------------------------+
-|     React 19 + Zustand   |   UI Layer
-|  Components + 5 Stores   |   (TypeScript)
-+--------------------------+
-|     Service Layer         |   Business Logic
-|  Gmail / DB / AI / Sync  |   (TypeScript)
-+--------------------------+
-|     Tauri v2 + Rust       |   Native Layer
-|  System Tray / OAuth /    |   (Rust)
-|  SQLite / Notifications   |
-+--------------------------+
-```
-
-### Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| **Framework** | [Tauri v2](https://v2.tauri.app/) |
-| **Frontend** | React 19, TypeScript, Zustand 5 |
+| | |
+|--|--|
+| **Framework** | Tauri v2 (Rust) + React 19 + TypeScript |
 | **Styling** | Tailwind CSS v4 |
+| **State** | Zustand 5 (7 stores) |
 | **Editor** | TipTap v3 |
-| **Backend** | Rust |
-| **Database** | SQLite (via tauri-plugin-sql) |
-| **Search** | FTS5 with trigram tokenizer |
-| **Icons** | Lucide React |
-| **Drag & Drop** | @dnd-kit |
+| **Database** | SQLite + FTS5 (24 tables) |
+| **AI** | Claude, GPT, Gemini |
 | **Testing** | Vitest + Testing Library |
 
-### Data Flow
-
-1. **Sync** -- Background sync every 60s via Gmail History API (delta sync). Falls back to full sync if history expires (~30 days).
-2. **Storage** -- All messages, threads, labels, and contacts stored in local SQLite with FTS5 full-text indexing.
-3. **State** -- Five Zustand stores manage UI state. No middleware, no persistence needed -- ephemeral state rebuilds from SQLite on startup.
-4. **Rendering** -- Email HTML is sanitized with DOMPurify and rendered in sandboxed iframes. Remote images blocked by default.
-
----
-
-## Development
-
-```bash
-# Start Tauri dev (frontend + backend)
-npm run tauri dev
-
-# Vite dev server only (no Tauri)
-npm run dev
-
-# Run tests
-npm run test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run a specific test file
-npx vitest run src/stores/uiStore.test.ts
-
-# Type-check
-npx tsc --noEmit
-
-# Build for production
-npm run tauri build
-
-# Rust only (from src-tauri/)
-cd src-tauri && cargo build
-```
-
-### Project Structure
-
-```
-velo/
-├── src/
-│   ├── components/         # React components (10 groups, ~38 files)
-│   │   ├── layout/         # Sidebar, EmailList, ReadingPane, TitleBar
-│   │   ├── email/          # ThreadView, MessageItem, EmailRenderer
-│   │   ├── composer/       # Composer, AddressInput, EditorToolbar
-│   │   ├── search/         # CommandPalette, SearchBar, ShortcutsHelp
-│   │   ├── settings/       # SettingsPage, FilterEditor, LabelEditor
-│   │   ├── accounts/       # AddAccount, AccountSwitcher
-│   │   ├── calendar/       # CalendarView, EventDetails
-│   │   └── ui/             # EmptyState, Skeleton
-│   ├── services/           # Business logic layer
-│   │   ├── db/             # SQLite queries, migrations, FTS5
-│   │   ├── gmail/          # GmailClient, tokenManager, syncManager
-│   │   ├── composer/       # Draft auto-save
-│   │   ├── search/         # Query parser, SQL builder
-│   │   ├── filters/        # Auto-apply filter engine
-│   │   └── snooze/         # Background snooze/schedule checkers
-│   ├── stores/             # Zustand stores (ui, account, thread, composer, label)
-│   └── styles/             # Tailwind CSS v4 globals
-├── src-tauri/
-│   ├── src/                # Rust backend (tray, OAuth, window management)
-│   ├── capabilities/       # Tauri v2 permissions
-│   └── icons/              # App icons (all platforms)
-├── package.json
-└── CLAUDE.md               # AI coding assistant context
-```
+See [Architecture](docs/architecture.md) for detailed design, data flow, and project structure.
 
 ---
 
 ## Building
 
 ```bash
-# Build for your current platform
 npm run tauri build
 ```
 
-Produces native installers:
-- **Windows** -- `.msi` / `.exe`
-- **macOS** -- `.dmg` / `.app`
-- **Linux** -- `.deb` / `.AppImage`
+**Windows** `.msi` / `.exe` &nbsp;&bull;&nbsp; **macOS** `.dmg` / `.app` &nbsp;&bull;&nbsp; **Linux** `.deb` / `.AppImage`
 
 ---
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+[MIT License](LICENSE)
 
 ---
 
