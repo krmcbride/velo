@@ -411,6 +411,11 @@ const MIGRATIONS = [
         ('auto_archive_after_unsubscribe', 'true');
     `,
   },
+  {
+    version: 7,
+    description: "Email authentication results",
+    sql: `ALTER TABLE messages ADD COLUMN auth_results TEXT;`,
+  },
 ];
 
 /**
