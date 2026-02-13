@@ -25,6 +25,10 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Pencil,
+  Columns2,
+  Bell,
+  Users,
+  Newspaper,
   type LucideIcon,
 } from "lucide-react";
 
@@ -43,6 +47,14 @@ const NAV_ITEMS: { id: string; label: string; icon: LucideIcon }[] = [
   { id: "spam", label: "Spam", icon: Ban },
   { id: "all", label: "All Mail", icon: Mail },
   { id: "calendar", label: "Calendar", icon: Calendar },
+];
+
+const CATEGORY_ITEMS: { id: string; label: string; icon: LucideIcon }[] = [
+  { id: "Primary", label: "Primary", icon: Inbox },
+  { id: "Updates", label: "Updates", icon: Bell },
+  { id: "Promotions", label: "Promotions", icon: Tag },
+  { id: "Social", label: "Social", icon: Users },
+  { id: "Newsletters", label: "Newsletters", icon: Newspaper },
 ];
 
 function DroppableNavItem({
@@ -158,7 +170,7 @@ function DroppableLabelItem({
 const LABELS_COLLAPSED_COUNT = 3;
 
 export function Sidebar({ collapsed, onAddAccount }: SidebarProps) {
-  const { activeLabel, setActiveLabel, toggleSidebar } = useUIStore();
+  const { activeLabel, setActiveLabel, toggleSidebar, inboxViewMode, setInboxViewMode, activeCategory, setActiveCategory } = useUIStore();
   const openComposer = useComposerStore((s) => s.openComposer);
   const activeAccountId = useAccountStore((s) => s.activeAccountId);
   const { labels, loadLabels, deleteLabel } = useLabelStore();
@@ -245,24 +257,73 @@ export function Sidebar({ collapsed, onAddAccount }: SidebarProps) {
       <nav className="flex-1 overflow-y-auto py-2">
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
+          const isInbox = item.id === "inbox";
           return (
-            <DroppableNavItem
-              key={item.id}
-              id={item.id}
-              isActive={activeLabel === item.id}
-              collapsed={collapsed}
-              onClick={() => setActiveLabel(item.id)}
-              title={collapsed ? item.label : undefined}
-            >
-              {() => (
-                <>
-                  <Icon size={18} className="shrink-0" />
-                  {!collapsed && (
-                    <span className="flex-1 truncate">{item.label}</span>
-                  )}
-                </>
+            <div key={item.id}>
+              <DroppableNavItem
+                id={item.id}
+                isActive={isInbox ? (activeLabel === "inbox" && (inboxViewMode === "unified" || activeCategory === "Primary")) : activeLabel === item.id}
+                collapsed={collapsed}
+                onClick={() => {
+                  setActiveLabel(item.id);
+                  if (isInbox && inboxViewMode === "split") {
+                    setActiveCategory("Primary");
+                  }
+                }}
+                title={collapsed ? item.label : undefined}
+              >
+                {() => (
+                  <>
+                    <Icon size={18} className="shrink-0" />
+                    {!collapsed && (
+                      <span className="flex-1 truncate">{item.label}</span>
+                    )}
+                    {isInbox && !collapsed && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setInboxViewMode(inboxViewMode === "split" ? "unified" : "split");
+                        }}
+                        title={inboxViewMode === "split" ? "Switch to unified inbox" : "Switch to split inbox"}
+                        className={`p-1 rounded transition-colors ${
+                          inboxViewMode === "split"
+                            ? "text-accent hover:bg-accent/10"
+                            : "text-sidebar-text/40 hover:text-sidebar-text hover:bg-sidebar-hover"
+                        }`}
+                      >
+                        <Columns2 size={14} />
+                      </button>
+                    )}
+                  </>
+                )}
+              </DroppableNavItem>
+              {/* Category sub-items when split mode is active */}
+              {isInbox && inboxViewMode === "split" && !collapsed && (
+                <div className="ml-4">
+                  {CATEGORY_ITEMS.map((cat) => {
+                    const CatIcon = cat.icon;
+                    const isCatActive = activeLabel === "inbox" && activeCategory === cat.id;
+                    return (
+                      <button
+                        key={cat.id}
+                        onClick={() => {
+                          setActiveLabel("inbox");
+                          setActiveCategory(cat.id);
+                        }}
+                        className={`flex items-center gap-2.5 w-full py-1.5 px-3 text-[0.8125rem] transition-colors ${
+                          isCatActive
+                            ? "text-accent font-medium"
+                            : "text-sidebar-text/70 hover:text-sidebar-text hover:bg-sidebar-hover"
+                        }`}
+                      >
+                        <CatIcon size={14} className="shrink-0" />
+                        <span className="flex-1 truncate">{cat.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               )}
-            </DroppableNavItem>
+            </div>
           );
         })}
 

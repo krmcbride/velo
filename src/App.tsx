@@ -103,7 +103,7 @@ function ResizableEmailLayout() {
 }
 
 export default function App() {
-  const { theme, setTheme, sidebarCollapsed, setSidebarCollapsed, setContactSidebarVisible, readingPanePosition, setReadingPanePosition, setReadFilter, setEmailListWidth, setEmailDensity, setDefaultReplyMode, setMarkAsReadBehavior, setSendAndArchive, fontScale, setFontScale, colorTheme, setColorTheme, activeLabel } = useUIStore();
+  const { theme, setTheme, sidebarCollapsed, setSidebarCollapsed, setContactSidebarVisible, readingPanePosition, setReadingPanePosition, setReadFilter, setEmailListWidth, setEmailDensity, setDefaultReplyMode, setMarkAsReadBehavior, setSendAndArchive, fontScale, setFontScale, colorTheme, setColorTheme, activeLabel, setInboxViewMode } = useUIStore();
   const { setAccounts } = useAccountStore();
   const [showAddAccount, setShowAddAccount] = useState(false);
   const [initialized, setInitialized] = useState(false);
@@ -232,6 +232,12 @@ export default function App() {
         const savedColorTheme = await getSetting("color_theme");
         if (savedColorTheme && COLOR_THEMES.some((t) => t.id === savedColorTheme)) {
           setColorTheme(savedColorTheme as ColorThemeId);
+        }
+
+        // Restore inbox view mode
+        const savedViewMode = await getSetting("inbox_view_mode");
+        if (savedViewMode === "unified" || savedViewMode === "split") {
+          setInboxViewMode(savedViewMode);
         }
 
         // Load custom keyboard shortcuts

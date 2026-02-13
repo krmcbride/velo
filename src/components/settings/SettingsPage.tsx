@@ -53,7 +53,7 @@ const tabs: { id: SettingsTab; label: string; icon: LucideIcon }[] = [
 ];
 
 export function SettingsPage() {
-  const { theme, setTheme, readingPanePosition, setReadingPanePosition, emailDensity, setEmailDensity, fontScale, setFontScale, colorTheme, setColorTheme, defaultReplyMode, setDefaultReplyMode, markAsReadBehavior, setMarkAsReadBehavior, sendAndArchive, setSendAndArchive } = useUIStore();
+  const { theme, setTheme, readingPanePosition, setReadingPanePosition, emailDensity, setEmailDensity, fontScale, setFontScale, colorTheme, setColorTheme, defaultReplyMode, setDefaultReplyMode, markAsReadBehavior, setMarkAsReadBehavior, sendAndArchive, setSendAndArchive, inboxViewMode, setInboxViewMode } = useUIStore();
   const setActiveLabel = useUIStore((s) => s.setActiveLabel);
   const { accounts, removeAccount: removeAccountFromStore } = useAccountStore();
   const [activeTab, setActiveTab] = useState<SettingsTab>("general");
@@ -392,6 +392,18 @@ export function SettingsPage() {
                           );
                         })}
                       </div>
+                    </SettingRow>
+                    <SettingRow label="Inbox view mode">
+                      <select
+                        value={inboxViewMode}
+                        onChange={(e) => {
+                          setInboxViewMode(e.target.value as "unified" | "split");
+                        }}
+                        className="w-48 bg-bg-tertiary text-text-primary text-sm px-3 py-1.5 rounded-md border border-border-primary focus:border-accent outline-none"
+                      >
+                        <option value="unified">Unified</option>
+                        <option value="split">Split (Categories)</option>
+                      </select>
                     </SettingRow>
                   </Section>
 

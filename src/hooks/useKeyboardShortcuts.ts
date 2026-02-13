@@ -210,6 +210,36 @@ async function executeAction(actionId: string): Promise<void> {
     case "nav.goDrafts":
       useUIStore.getState().setActiveLabel("drafts");
       break;
+    case "nav.goPrimary":
+      if (useUIStore.getState().inboxViewMode === "split") {
+        useUIStore.getState().setActiveLabel("inbox");
+        useUIStore.getState().setActiveCategory("Primary");
+      }
+      break;
+    case "nav.goUpdates":
+      if (useUIStore.getState().inboxViewMode === "split") {
+        useUIStore.getState().setActiveLabel("inbox");
+        useUIStore.getState().setActiveCategory("Updates");
+      }
+      break;
+    case "nav.goPromotions":
+      if (useUIStore.getState().inboxViewMode === "split") {
+        useUIStore.getState().setActiveLabel("inbox");
+        useUIStore.getState().setActiveCategory("Promotions");
+      }
+      break;
+    case "nav.goSocial":
+      if (useUIStore.getState().inboxViewMode === "split") {
+        useUIStore.getState().setActiveLabel("inbox");
+        useUIStore.getState().setActiveCategory("Social");
+      }
+      break;
+    case "nav.goNewsletters":
+      if (useUIStore.getState().inboxViewMode === "split") {
+        useUIStore.getState().setActiveLabel("inbox");
+        useUIStore.getState().setActiveCategory("Newsletters");
+      }
+      break;
     case "nav.escape": {
       if (useComposerStore.getState().isOpen) {
         useComposerStore.getState().closeComposer();

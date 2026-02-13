@@ -18,6 +18,8 @@ describe("uiStore", () => {
       readFilter: "all",
       fontScale: "default",
       colorTheme: "indigo",
+      inboxViewMode: "unified",
+      activeCategory: "Primary",
     });
   });
 
@@ -162,5 +164,34 @@ describe("uiStore", () => {
     useUIStore.getState().setColorTheme("emerald");
     expect(setSetting).toHaveBeenCalledWith("color_theme", "emerald");
     expect(useUIStore.getState().colorTheme).toBe("emerald");
+  });
+
+  it("inboxViewMode should default to unified", () => {
+    expect(useUIStore.getState().inboxViewMode).toBe("unified");
+  });
+
+  it("setInboxViewMode should persist to DB and update state", () => {
+    useUIStore.getState().setInboxViewMode("split");
+    expect(setSetting).toHaveBeenCalledWith("inbox_view_mode", "split");
+    expect(useUIStore.getState().inboxViewMode).toBe("split");
+
+    useUIStore.getState().setInboxViewMode("unified");
+    expect(setSetting).toHaveBeenCalledWith("inbox_view_mode", "unified");
+    expect(useUIStore.getState().inboxViewMode).toBe("unified");
+  });
+
+  it("activeCategory should default to Primary", () => {
+    expect(useUIStore.getState().activeCategory).toBe("Primary");
+  });
+
+  it("setActiveCategory should update state", () => {
+    useUIStore.getState().setActiveCategory("Updates");
+    expect(useUIStore.getState().activeCategory).toBe("Updates");
+
+    useUIStore.getState().setActiveCategory("Social");
+    expect(useUIStore.getState().activeCategory).toBe("Social");
+
+    useUIStore.getState().setActiveCategory("Primary");
+    expect(useUIStore.getState().activeCategory).toBe("Primary");
   });
 });

@@ -1,13 +1,14 @@
 import { useEffect, useCallback, useMemo, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { ThreadCard } from "../email/ThreadCard";
+import { CategoryTabs } from "../email/CategoryTabs";
 import { SearchBar } from "../search/SearchBar";
 import { EmailListSkeleton } from "../ui/Skeleton";
 import { useThreadStore, type Thread } from "@/stores/threadStore";
 import { useAccountStore } from "@/stores/accountStore";
 import { useUIStore } from "@/stores/uiStore";
 import { getThreadsForAccount, getThreadsForCategory, getThreadLabelIds, deleteThread as deleteThreadFromDb } from "@/services/db/threads";
-import { getCategoriesForThreads, getCategoryUnreadCounts, ALL_CATEGORIES } from "@/services/db/threadCategories";
+import { getCategoriesForThreads, getCategoryUnreadCounts } from "@/services/db/threadCategories";
 import { getActiveFollowUpThreadIds } from "@/services/db/followUpReminders";
 import { getBundleRules, getHeldThreadIds, getBundleSummary, type DbBundleRule } from "@/services/db/bundleRules";
 import { getGmailClient } from "@/services/gmail/tokenManager";
@@ -48,10 +49,17 @@ export function EmailList({ width, listRef }: { width?: number; listRef?: React.
   const readingPanePosition = useUIStore((s) => s.readingPanePosition);
   const userLabels = useLabelStore((s) => s.labels);
 
+  const inboxViewMode = useUIStore((s) => s.inboxViewMode);
+  const storeActiveCategory = useUIStore((s) => s.activeCategory);
+  const setStoreActiveCategory = useUIStore((s) => s.setActiveCategory);
+
+  // In split mode, use the store's active category; in unified mode, always use "All"
+  const activeCategory = inboxViewMode === "split" ? storeActiveCategory : "All";
+  const setActiveCategory = inboxViewMode === "split" ? setStoreActiveCategory : () => {};
+
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>("All");
   const [categoryMap, setCategoryMap] = useState<Map<string, string>>(new Map());
   const [categoryUnreadCounts, setCategoryUnreadCounts] = useState<Map<string, number>>(new Map());
   const [followUpThreadIds, setFollowUpThreadIds] = useState<Set<string>>(new Set());
@@ -343,8 +351,10 @@ export function EmailList({ width, listRef }: { width?: number; listRef?: React.
 
   // Reset category tab when leaving inbox
   useEffect(() => {
-    if (activeLabel !== "inbox") setActiveCategory("All");
-  }, [activeLabel]);
+    if (activeLabel !== "inbox" && inboxViewMode === "split") {
+      setStoreActiveCategory("Primary");
+    }
+  }, [activeLabel, inboxViewMode, setStoreActiveCategory]);
 
   // Listen for sync completion to reload
   useEffect(() => {
@@ -390,9 +400,11 @@ export function EmailList({ width, listRef }: { width?: number; listRef?: React.
       <div className="px-4 py-2 border-b border-border-primary flex items-center justify-between">
         <div>
           <h2 className="text-sm font-semibold text-text-primary capitalize">
-            {LABEL_MAP[activeLabel] !== undefined
-              ? activeLabel
-              : userLabels.find((l) => l.id === activeLabel)?.name ?? activeLabel}
+            {activeLabel === "inbox" && inboxViewMode === "split" && activeCategory !== "All"
+              ? `Inbox — ${activeCategory}`
+              : LABEL_MAP[activeLabel] !== undefined
+                ? activeLabel
+                : userLabels.find((l) => l.id === activeLabel)?.name ?? activeLabel}
           </h2>
           <span className="text-xs text-text-tertiary">
             {filteredThreads.length} conversation{filteredThreads.length !== 1 ? "s" : ""}
@@ -409,9 +421,13 @@ export function EmailList({ width, listRef }: { width?: number; listRef?: React.
         </select>
       </div>
 
-      {/* Category tabs (inbox only) */}
-      {activeLabel === "inbox" && (
-        <CategoryTabs activeCategory={activeCategory} onSelect={setActiveCategory} unreadCounts={categoryUnreadCounts} />
+      {/* Category tabs (inbox + split mode only) */}
+      {activeLabel === "inbox" && inboxViewMode === "split" && (
+        <CategoryTabs
+          activeCategory={activeCategory}
+          onCategoryChange={setActiveCategory}
+          unreadCounts={Object.fromEntries(categoryUnreadCounts)}
+        />
       )}
 
       {/* Multi-select action bar */}
@@ -589,89 +605,6 @@ export function EmailList({ width, listRef }: { width?: number; listRef?: React.
               </div>
             )}
           </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function CategoryTabs({ activeCategory, onSelect, unreadCounts }: { activeCategory: string; onSelect: (cat: string) => void; unreadCounts: Map<string, number> }) {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-  const tabRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-  const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number } | null>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-
-  const checkOverflow = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 1);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
-  }, []);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    checkOverflow();
-    const ro = new ResizeObserver(checkOverflow);
-    ro.observe(el);
-    el.addEventListener("scroll", checkOverflow, { passive: true });
-    return () => {
-      ro.disconnect();
-      el.removeEventListener("scroll", checkOverflow);
-    };
-  }, [checkOverflow]);
-
-  // Update sliding indicator position when active category changes
-  useEffect(() => {
-    const el = tabRefs.current.get(activeCategory);
-    if (el) {
-      setIndicatorStyle({ left: el.offsetLeft, width: el.offsetWidth });
-    }
-  }, [activeCategory]);
-
-  return (
-    <div className="relative border-b border-border-secondary shrink-0">
-      {/* Left fade */}
-      {canScrollLeft && (
-        <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-bg-secondary to-transparent z-10 pointer-events-none" />
-      )}
-      {/* Right fade */}
-      {canScrollRight && (
-        <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-bg-secondary to-transparent z-10 pointer-events-none" />
-      )}
-      <div
-        ref={scrollRef}
-        className="flex px-2 overflow-x-auto hide-scrollbar relative"
-      >
-        {["All", ...ALL_CATEGORIES].map((cat) => (
-          <button
-            key={cat}
-            ref={(el) => { if (el) tabRefs.current.set(cat, el); else tabRefs.current.delete(cat); }}
-            onClick={(e) => {
-              onSelect(cat);
-              e.currentTarget.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-            }}
-            className={`px-2.5 py-1.5 text-xs font-medium transition-colors relative whitespace-nowrap flex items-center gap-1 ${
-              activeCategory === cat
-                ? "text-accent"
-                : "text-text-tertiary hover:text-text-primary"
-            }`}
-          >
-            {cat}
-            {cat !== "All" && (unreadCounts.get(cat) ?? 0) > 0 && (
-              <span className="text-[0.625rem] bg-accent/15 text-accent px-1.5 rounded-full leading-normal">
-                {unreadCounts.get(cat)}
-              </span>
-            )}
-          </button>
-        ))}
-        {/* Sliding indicator */}
-        {indicatorStyle && (
-          <span
-            className="absolute bottom-0 h-0.5 bg-accent rounded-full transition-all duration-200 ease-out pointer-events-none"
-            style={{ left: indicatorStyle.left, width: indicatorStyle.width }}
-          />
         )}
       </div>
     </div>
