@@ -194,3 +194,4 @@ Key tables (30 total): `accounts`, `messages` (with FTS5 index `messages_fts`, `
 - **Smart folders**: Saved search queries with dynamic tokens (`__LAST_7_DAYS__`, `__LAST_30_DAYS__`, `__TODAY__`). Managed via `smartFolderStore`
 - **Quick steps**: Custom action chains with 18 action types. Executor in `services/quickSteps/executor.ts`
 - **Split inbox**: Category tabs (Primary/Updates/Promotions/Social/Newsletters) with backfill service for existing threads
+- **Help page**: In-app help at `/help/$topic` with 13 categories, searchable cards, and contextual `HelpTooltip` component. All content in `src/constants/helpContent.ts`. After adding a new feature, run `/document-feature` to add its help card
