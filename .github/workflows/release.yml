@@ -172,7 +172,7 @@ jobs:
 
   update-homebrew:
     needs: build-macos
-    if: github.event_name == 'release'
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
     runs-on: macos-latest
     steps:
       - name: Get version from tag
