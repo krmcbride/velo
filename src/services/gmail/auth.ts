@@ -85,7 +85,7 @@ export async function startOAuthFlow(
   crypto.getRandomValues(stateArray);
   const oauthState = base64UrlEncode(stateArray);
 
-  const redirectUri = `http://127.0.0.1:${OAUTH_CALLBACK_PORT}`;
+  const redirectUri = `http://localhost:${OAUTH_CALLBACK_PORT}`;
 
   const params = new URLSearchParams({
     client_id: clientId,
