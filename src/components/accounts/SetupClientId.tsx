@@ -45,7 +45,7 @@ export function SetupClientId({ onComplete, onCancel }: SetupClientIdProps) {
             Create OAuth 2.0 credentials (Web application type)
           </li>
           <li>
-            Add <code className="bg-bg-tertiary px-1 rounded text-xs">http://127.0.0.1:17248</code>{" "}
+            Add <code className="bg-bg-tertiary px-1 rounded text-xs">http://localhost:17248</code>{" "}
             as an authorized redirect URI
           </li>
           <li>Copy the Client ID and Client Secret below</li>

@@ -551,10 +551,10 @@ export function AddImapAccount({
         <p className="text-xs text-text-tertiary">
           You need to register an app with {providerName} to get a Client ID.{" "}
           {providerId === "microsoft" && (
-            <>Register at the Azure Portal (App Registrations) with redirect URI <code className="text-accent">http://127.0.0.1:17248</code>.</>
+            <>Register at the Azure Portal (App Registrations) with redirect URI <code className="text-accent">http://localhost:17248</code>.</>
           )}
           {providerId === "yahoo" && (
-            <>Register at the Yahoo Developer Network with redirect URI <code className="text-accent">http://127.0.0.1:17248</code>.</>
+            <>Register at the Yahoo Developer Network with redirect URI <code className="text-accent">http://localhost:17248</code>.</>
           )}
         </p>
       </div>
